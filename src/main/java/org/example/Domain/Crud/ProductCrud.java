@@ -8,9 +8,8 @@ import org.example.Services.ProductService;
 import java.util.*;
 
 public class ProductCrud implements ProductServiceInterface {
-    public ProductCrud() {}
 
-    ProductService productService = new ProductService();
+    private ProductService productService;
 
     public ProductCrud(ProductService productService) {
         this.productService = productService;
@@ -21,42 +20,37 @@ public class ProductCrud implements ProductServiceInterface {
         System.out.println("Por favor diligencie los siguientes datos para poder agregar el producto en el inventario \n");
         Scanner data = new Scanner(System.in);
         System.out.println("Por favor ingrese el nombre del producto");
-        String name= data.nextLine();
+        String name= data.next();
         System.out.println("Por favor ingrese la fecha de vencimiento del producto");
-        String date= data.nextLine();
+        String date= data.next();
         System.out.println("Por favor ingrese la marca del producto");
-        String brand= data.nextLine();
+        String brand= data.next();
         ECategory category = productService.selectCategoryProduct();
         System.out.println("Por favor ingrese la descripción del producto");
-        String description= data.nextLine();
+        String description= data.next();
         int price =0;
         try {
             System.out.println("Por favor ingrese el precio del producto");
             price= data.nextInt();
         }catch (InputMismatchException e){
-            data.nextLine();
             //e.printStackTrace();
             System.out.println("Ingrese un valor numérico válido para el precio");
-            data.nextInt();
+            price=data.nextInt();
         }
-        data.nextLine();
         System.out.println("Por favor ingrese la url de la imagen del producto");
-        String url= data.nextLine();
+        String url= data.next();
         int quantity =0;
         try {
             System.out.println("Por favor ingrese la cantidad de producto almacenada en el inventario");
             quantity= data.nextInt();
 
         }catch (InputMismatchException ex){
-            data.nextLine();
             //ex.printStackTrace();
             System.out.println("Ingrese un valor numérico válido para la cantidad.");
             quantity= data.nextInt();
         }
         Product product = new Product(name,date,brand, category.getValue(), description,price,url,quantity);
         productService.addProductAtList(product);
-        //System.out.println(product);
-        //productService.printProduct();
     }
 
     @Override
@@ -65,23 +59,23 @@ public class ProductCrud implements ProductServiceInterface {
         Scanner updateProduct = new Scanner(System.in);
         System.out.println("Por favor ingrese el Id del producto que desea actualizar");
         int idProduct = updateProduct.nextInt();
-        updateProduct.nextLine();
+        updateProduct.next();
 
         if (!productService.getListProductsInventory().isEmpty()){
             Product productoEncontrado= productService.getListProductsInventory().stream().filter(x->x.getIdProduct()==(idProduct)).findFirst().orElse(null);
             if (productoEncontrado != null){
                 System.out.println("Por favor ingrese el nombre que desea actualizar");
-                String updateName=updateProduct.nextLine();
+                String updateName=updateProduct.next();
                 System.out.println("Por favor ingrese la descripción que desea actualizar");
-                String updateDescrip=updateProduct.nextLine();
+                String updateDescrip=updateProduct.next();
                 int updatePrice;
                 try {
                     System.out.println("Por favor ingrese el precio que desea actualizar:");
-                    updatePrice = Integer.parseInt(updateProduct.nextLine());
+                    updatePrice = Integer.parseInt(updateProduct.next());
                 } catch (NumberFormatException e) {
                     //e.printStackTrace();
                     System.out.println("Ingrese un valor numérico válido para el precio.");
-                    updatePrice = Integer.parseInt(updateProduct.nextLine());
+                    updatePrice = Integer.parseInt(updateProduct.next());
                 }
                 productoEncontrado.setName(updateName);
                 //productoEncontrado.setCategory(updateCate);

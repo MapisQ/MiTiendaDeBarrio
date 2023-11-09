@@ -4,10 +4,7 @@ package org.example.Services;
 import org.example.Domain.Entities.Product;
 import org.example.Enums.ECategory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class ProductService {
     private final List<Product> listProductsInventory = new ArrayList<>();
@@ -37,14 +34,11 @@ public class ProductService {
         return listProductsInventory.stream().filter(product -> product.getIdProduct()==id).findAny();
     }
 
-    public Optional<Product> findProductByIdOrName(String name) {
+    public Optional<Product> findProductByName(String name) {
         return listProductsInventory.stream()
-                .filter(product -> product.getName().equals(name))
+                .filter(product -> product.getName().equalsIgnoreCase(name))
                 .findAny();
     }
-
-
-
 
     public void printProduct() {listProductsInventory.stream().forEach(product -> System.out.println(product)); }
 

@@ -1,11 +1,18 @@
 package org.example.Domain.Crud;
 
 import org.example.Domain.ProductServiceInterface;
+import org.example.Services.ProductService;
 import org.example.Services.SalesService;
 import java.util.Scanner;
 
 public class SalesCrud implements ProductServiceInterface {
-    SalesService salesService = new SalesService();
+
+    private ProductService productService;
+
+    public SalesCrud(ProductService productService) {
+        this.productService=productService;
+    }
+    private SalesService salesService = new SalesService(productService);
 
 
     @Override
@@ -21,7 +28,7 @@ public class SalesCrud implements ProductServiceInterface {
 
         do {
             switch (opcion1) {
-                case 1: salesService.SalesTotal();
+                case 1: salesService.SalesTotal(productService);
                     System.out.println("¿Desea ingresar un producto a la venta?");
                     System.out.println("| 1. Si              |");
                     System.out.println("| 2. No              |");

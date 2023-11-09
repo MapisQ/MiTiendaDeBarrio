@@ -13,8 +13,9 @@ public class MenuService {
 
     ProductService productService = new ProductService();
     ProductCrud productCrud = new ProductCrud(productService);
-    SalesCrud sales = new SalesCrud();
-    SalesService salesService = new SalesService();
+    SalesService salesService = new SalesService(productService);
+    SalesCrud sales = new SalesCrud(productService);
+
 
     //Metodos para seleccionar alguna opción en los menus
     public PrincipalMenu selectOptionMenuP(){
@@ -119,7 +120,7 @@ public class MenuService {
                 case 1: sales.addProduct();
                     //System.out.println("ha generado una venta");
                     break;
-                case 2:salesService.printSale(productService);
+                case 2:salesService.printSale();
                     //System.out.println("Ha impreso una factura");
                     break;
                 case 3:selectOptionMenuI();
