@@ -10,6 +10,6 @@ public final class SalesMenu {
         "\n  | 2. Imprimir Factura.                      |"+
         "\n  | 3. Ir al Menú de Inventario.              |"+
         "\n  | 4. Volver al menú Principal.              |"+
-        "\n  | 5. Salir.                                 |"+
+        "\n  | 5. Buscar producto en lista               |"+
         "\n*-----------------------------------------------*";
 }

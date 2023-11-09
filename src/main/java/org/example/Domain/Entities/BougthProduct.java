@@ -6,14 +6,12 @@ public class BougthProduct {
     private String bougthNameProduct;
     private int totalConver;
     private int quantityProductBougth;
-    private int totalSales;
 
     //Metodos Constructores
-    public BougthProduct(String bougthNameProduct, int totalConver, int quantityProductBougth, int totalSales) {
+    public BougthProduct(String bougthNameProduct, int totalConver, int quantityProductBougth ) {
         this.bougthNameProduct = bougthNameProduct;
         this.totalConver = totalConver;
         this.quantityProductBougth = quantityProductBougth;
-        this.totalSales = totalSales;
     }
     public BougthProduct() {}
 
@@ -37,13 +35,6 @@ public class BougthProduct {
     }
     public void setQuantityProductBougth(int quantityProductBougth) {
         this.quantityProductBougth = quantityProductBougth;
-    }
-
-    public int getTotalSales() {
-        return totalSales;
-    }
-    public void setTotalSales(int totalSales) {
-        this.totalSales = totalSales;
     }
 
     //Metodo toString
