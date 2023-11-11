@@ -1,4 +1,4 @@
-package org.example.Menus;
+package org.example.menus;
 
 public final class InventoryMenu {
 
@@ -13,5 +13,6 @@ public final class InventoryMenu {
         "\n  | 5. Lista del inventario.                  |"+
         "\n  | 6. Ir al Menú de ventas.                  |"+
         "\n  | 7. Volver al menú Principal.              |"+
+        "\n  | 8. Salir.                                 |"+
         "\n*-----------------------------------------------*";
 }

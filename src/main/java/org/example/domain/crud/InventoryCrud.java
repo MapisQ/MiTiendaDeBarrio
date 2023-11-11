@@ -1,10 +1,10 @@
-package org.example.Domain.Crud;
+package org.example.domain.crud;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.example.Domain.Entities.Inventory;
-import org.example.Domain.ProductServiceInterface;
+import org.example.domain.entities.Inventory;
+import org.example.domain.ProductServiceInterface;
 
 import java.io.File;
 import java.io.FileReader;

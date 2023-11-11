@@ -1,7 +1,7 @@
-package org.example.Services;
+package org.example.services;
 
-import org.example.Domain.Entities.BougthProduct;
-import org.example.Domain.Entities.Product;
+import org.example.domain.entities.BougthProduct;
+import org.example.domain.entities.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +12,15 @@ public class SalesService {
 
     private List<BougthProduct> dataSales = new ArrayList<>();
     private List<Integer> prices = new ArrayList<>();
-
     int cantiCompra = 0;
     String nombreCompra = "";
     int conversiontotalCompra = 0;
     int totalFinal = 0;
+
     private ProductService productService;
 
     //Metodo constructor
    public SalesService(ProductService productService) {}
-
 
     //Metodos Getter y setter
     public List<BougthProduct> getDataSales() {
@@ -54,41 +53,41 @@ public class SalesService {
             System.out.println("Por favor ingrese la cantidad de " + nombreCompra + " que compra el cliente");
             cantiCompra = compra.nextInt();
             compra.nextLine();
+            if (cantiCompra<=productInList.getQuantity()){
+                double IVA = 0.19;
+                double totalIva = productInList.getPrice() * IVA;
+                double total = totalIva + productInList.getPrice();
+                double totalCompra = total * cantiCompra;
 
-            double IVA = 0.19;
-            double totalIva = productInList.getPrice() * IVA;
-            double total = totalIva + productInList.getPrice();
-            double totalCompra = total * cantiCompra;
+                BougthProduct productbougth = new BougthProduct(nombreCompra, (int) total, cantiCompra);
+                getDataSales().add(productbougth);
+                //System.out.println(getDataSales());
 
-            BougthProduct productbougth = new BougthProduct(nombreCompra, (int) total, cantiCompra);
-            getDataSales().add(productbougth);
-            //System.out.println(getDataSales());
+                getPrices().add((int) totalCompra);
+                //System.out.println(getPrices());
 
-            getPrices().add((int) totalCompra);
-            //System.out.println(getPrices());
+                totalFinal = getPrices().stream().mapToInt(Integer::intValue).sum();
 
-            totalFinal = getPrices().stream().mapToInt(Integer::intValue).sum();
+                int quantityProductInList = productInList.getQuantity();
 
-            int quantityProductInList = productInList.getQuantity();
+                int inventaryFinal= quantityProductInList-cantiCompra;
+                //System.out.println(inventaryFinal);
+                productInList.setQuantity(inventaryFinal);
+            }else {
+                System.out.println("Lamentamos informarte que actualmente no disponemos de la cantidad solicitada de productos, tenemos "+productInList.getQuantity()+" productos en stock");
+            }
 
-            int inventaryFinal= quantityProductInList-cantiCompra;
-            //System.out.println(inventaryFinal);
-            productInList.setQuantity(inventaryFinal);
-
-            System.out.println(getDataSales());
-            System.out.println(totalFinal);
         }
         else {
             System.out.println("El producto no se encuentra en el inventario");
         }
     }
 
-    public void printSale() {
+    public void printSale(ProductService productService) {
 
         System.out.println("*----------------------------------------------*");
         System.out.println("        PRODUCTOS COMPRADOS  ");
-        System.out.println(getDataSales());
-        System.out.println("\n");
+        System.out.println("\n"+getDataSales()+"\n");
         System.out.println("Total de la compra: " + totalFinal);
         System.out.println("*----------------------------------------------*");
     }

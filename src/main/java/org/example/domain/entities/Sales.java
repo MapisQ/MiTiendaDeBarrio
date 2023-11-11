@@ -1,7 +1,4 @@
-package org.example.Domain.Entities;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.example.domain.entities;
 
 public class Sales {
 

@@ -1,4 +1,4 @@
-package org.example.Domain.Entities;
+package org.example.domain.entities;
 
 public class BougthProduct {
 
