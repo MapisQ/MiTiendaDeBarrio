@@ -1,4 +1,6 @@
-package org.example.Domain.Entities;
+package org.example.domain.entities;
+
+import org.example.enums.ECategory;
 
 import java.util.Date;
 
@@ -6,7 +8,7 @@ public class Product {
     //Atributos
     private int idProduct;
     private String name;
-    private String date ;
+    private Date date ;
     private String brand;
     private int quantity;
     private String category;
@@ -17,7 +19,7 @@ public class Product {
     //Lista que va almacenar los productos
 
     //Metodos constructores
-    public Product(String name, String date, String brand, String category, String description, int price,String url,int quantity) {
+    public Product(String name, Date date, String brand, String category, String description, int price,String url,int quantity) {
         this.idProduct = ++contadorId;
         this.name = name;
         this.date = date;
@@ -46,10 +48,10 @@ public class Product {
         this.name = name;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

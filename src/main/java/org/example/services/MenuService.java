@@ -1,20 +1,25 @@
-package org.example.Services;
+package org.example.services;
 
-import org.example.Domain.Crud.ProductCrud;
-import org.example.Domain.Crud.SalesCrud;
-import org.example.Menus.InventoryMenu;
-import org.example.Menus.PrincipalMenu;
-import org.example.Menus.SalesMenu;
+import org.example.domain.crud.ProductCrud;
+import org.example.domain.crud.SalesCrud;
+import org.example.domain.entities.Product;
+import org.example.menus.InventoryMenu;
+import org.example.menus.PrincipalMenu;
+import org.example.menus.SalesMenu;
+import org.example.menus.UpdateProductMenu;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import static java.awt.SystemColor.menu;
+
 public class MenuService {
+    public MenuService() {}
 
     ProductService productService = new ProductService();
-    ProductCrud productCrud = new ProductCrud(productService);
-    SalesService salesService = new SalesService(productService);
+    ProductCrud productCrud = new ProductCrud(productService,this);
     SalesCrud sales = new SalesCrud(productService);
+
 
 
     //Metodos para seleccionar alguna opción en los menus
@@ -50,7 +55,7 @@ public class MenuService {
         return selectOptionMenuP();
     }
 
-    public InventoryMenu selectOptionMenuI() {
+    public PrincipalMenu selectOptionMenuI() {
         Scanner menuI = new Scanner(System.in);
 
 
@@ -59,10 +64,10 @@ public class MenuService {
         int option = menuI.nextInt();
 
     try {
-        if (option < 1 || option > 7) {
+        if (option < 1 || option > 8) {
             System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
             selectOptionMenuI();
-        } else if (option >= 1 || option <= 7) {
+        } else if (option >= 1 || option <= 8) {
             switch (option) {
                 case 1:
                     productCrud.addProduct();
@@ -81,27 +86,28 @@ public class MenuService {
                     //System.out.println("Ha modificado un producto");
                     break;
                 case 5:
-                    productService.printProduct();
+                    productCrud.printInventory();
                     //System.out.println("La lista de invetario es: ");
                     break;
-                case 6:
-                    selectOptionMenuS();
+                case 6:selectOptionMenuS();
                     //System.out.println("Esta en el menú de ventas");
                     break;
                 case 7:
                     selectOptionMenuP();
                     //System.out.println("Esta en el menú principal");
                     break;
+                case 8:
+                    System.exit(0);
+                    //System.out.println("Esta en el menú principal");
+                break;
             }
         }
-
-
     }catch (InputMismatchException e) {
-            System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
-            selectOptionMenuI();
-        }
-        return selectOptionMenuI();
+        System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
+        selectOptionMenuI();
     }
+    return selectOptionMenuI();
+}
 
     public SalesMenu selectOptionMenuS(){
 
@@ -120,7 +126,7 @@ public class MenuService {
                 case 1: sales.addProduct();
                     //System.out.println("ha generado una venta");
                     break;
-                case 2:salesService.printSale();
+                case 2:sales.printSale();
                     //System.out.println("Ha impreso una factura");
                     break;
                 case 3:selectOptionMenuI();
@@ -140,5 +146,30 @@ public class MenuService {
             selectOptionMenuS();
         }
         return selectOptionMenuS();
+    }
+
+    public UpdateProductMenu selectOptionMenuUP() {
+        Scanner updateProduct = new Scanner(System.in);
+
+                System.out.println("Por favor seleccione una opción valida: ");
+                System.out.println(UpdateProductMenu.SELECT_UPDATE_PRODUCT);
+                int option = updateProduct.nextInt();
+                updateProduct.nextLine();
+
+                try {
+                    if (option < 1 || option > 7) {
+                        System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
+                        selectOptionMenuUP();
+
+                    } else if (option>=1 || option<=6) {
+                        productCrud.modifyProduct();
+                    } else if (option==7) {
+                        selectOptionMenuI();
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
+                    selectOptionMenuUP();
+                }
+        return selectOptionMenuUP();
     }
 }

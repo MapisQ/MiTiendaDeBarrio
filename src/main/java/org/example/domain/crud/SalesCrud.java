@@ -1,8 +1,8 @@
-package org.example.Domain.Crud;
+package org.example.domain.crud;
 
-import org.example.Domain.ProductServiceInterface;
-import org.example.Services.ProductService;
-import org.example.Services.SalesService;
+import org.example.domain.ProductServiceInterface;
+import org.example.services.ProductService;
+import org.example.services.SalesService;
 import java.util.Scanner;
 
 public class SalesCrud implements ProductServiceInterface {
@@ -52,6 +52,10 @@ public class SalesCrud implements ProductServiceInterface {
 
     @Override
     public void searchProduct() {}
+
+    public void printSale(){
+        salesService.printSale(productService);
+    }
 
 
 }

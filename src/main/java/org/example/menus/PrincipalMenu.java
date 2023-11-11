@@ -1,4 +1,4 @@
-package org.example.Menus;
+package org.example.menus;
 
 public final class PrincipalMenu {
 
