@@ -1,30 +1,33 @@
 package org.example.domain.crud;
 
+import org.example.SuperKeyBoard;
 import org.example.domain.ProductServiceInterface;
+import org.example.services.MenuService;
 import org.example.services.ProductService;
 import org.example.services.SalesService;
-import java.util.Scanner;
 
 public class SalesCrud implements ProductServiceInterface {
 
     private ProductService productService;
+    private  MenuService menuService;
 
-    public SalesCrud(ProductService productService) {
+    public SalesCrud(ProductService productService, MenuService menuService) {
+
         this.productService=productService;
+        this.menuService=menuService;
     }
     private SalesService salesService = new SalesService(productService);
 
 
     @Override
     public void addProduct() {
-        Scanner selec = new Scanner(System.in);
 
         System.out.println("¿Desea ingresar un producto a la venta?");
         System.out.println("| 1. Si              |");
         System.out.println("| 2. No              |");
 
         //Este es el del do while que indica que mientras opcion1 sea diferente a 2 va a seguir ejerciendo el do while
-        int opcion1 = selec.nextInt();
+        int opcion1 = SuperKeyBoard.readNumber();
 
         do {
             switch (opcion1) {
@@ -32,10 +35,10 @@ public class SalesCrud implements ProductServiceInterface {
                     System.out.println("¿Desea ingresar un producto a la venta?");
                     System.out.println("| 1. Si              |");
                     System.out.println("| 2. No              |");
-                    opcion1 = selec.nextInt();
+                    opcion1 = SuperKeyBoard.readNumber();
                     break;
-                case 2:
-                    System.out.println("Salió del menú");
+                case 2:menuService.selectOptionMenuS();
+                    //System.out.println("Salió del menú");
                     break;
                 default:
                     System.out.println("La opción seleccionada no es valida");

@@ -1,31 +1,24 @@
 package org.example.services;
 
 
+import org.example.SuperKeyBoard;
 import org.example.domain.entities.Product;
 import org.example.enums.ECategory;
 
 import java.util.*;
 
 public class ProductService {
-    private final List<Product> listProductsInventory = new ArrayList<>();
 
+    private final List<Product> listProductsInventory = new ArrayList<>();
+    private ProductService productService;
+    public ProductService(ProductService productService) {
+        this.productService = productService;
+    }
     public ProductService() {}
 
     //Metodos getter y setter
     public List<Product> getListProductsInventory() {
         return listProductsInventory;
-    }
-
-//    public void setListProductsInventory(List<Product> listProductsInventory) {
-//        this.listProductsInventory = listProductsInventory;
-//    }
-
-    ProductService productService;
-
-    Scanner updateProduct = new Scanner(System.in);
-
-    public ProductService(ProductService productService) {
-        this.productService = productService;
     }
 
     //Metodos de la clase ProductService
@@ -51,7 +44,6 @@ public class ProductService {
     public void printProduct() {listProductsInventory.stream().forEach(product -> System.out.println(product)); }
 
     public ECategory selectCategoryProduct(){
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Por favor seleccione una de las categorias que se muestran a continuación: ");
         for (int i=0;i<ECategory.values().length;i++){
@@ -60,7 +52,7 @@ public class ProductService {
         }
         System.out.println("|-------------------------------------|");
         try {
-            int option = scanner.nextInt();
+            int option = SuperKeyBoard.readNumber();
             if (option>=1 && option<=ECategory.values().length){
                 return ECategory.values()[option-1];
             }else {
@@ -75,39 +67,33 @@ public class ProductService {
 
     public String updateNameProduct(){
         System.out.println("Por favor ingrese el nombre que desea actualizar");
-        String updateName = updateProduct.next();
+        String updateName = SuperKeyBoard.readText();
 
         return updateName;
     }
     public String updateBrandProduct(){
         System.out.println("Por favor ingrese la marca que desea actualizar");
-        String updateBrand = updateProduct.next();
+        String updateBrand = SuperKeyBoard.readText();
 
         return updateBrand;
     }
     public String updateDescriptionProduct(){
-        updateProduct.nextLine();
+        SuperKeyBoard.readText();
         System.out.println("Por favor ingrese la descripción que desea actualizar");
-        String updateDescrip = updateProduct.nextLine();
+        String updateDescrip = SuperKeyBoard.readText();
 
         return updateDescrip;
     }
     public int updatePriceProduct(){
-        int updatePrice;
-        try {
-            System.out.println("Por favor ingrese el precio que desea actualizar:");
-            updatePrice = Integer.parseInt(updateProduct.next());
-        } catch (NumberFormatException e) {
-            //e.printStackTrace();
-            System.out.println("Ingrese un valor numérico válido para el precio.");
-            updatePrice = Integer.parseInt(updateProduct.next());
-        }
+
+        System.out.println("Por favor ingrese el precio que desea actualizar:");
+        int updatePrice = SuperKeyBoard.readNumber();
 
         return updatePrice;
     }
     public String updateURLProduct(){
         System.out.println("Por favor ingrese la URL que desea actualizar");
-        String updateUrl = updateProduct.next();
+        String updateUrl = SuperKeyBoard.readText();
 
         return updateUrl;
     }
