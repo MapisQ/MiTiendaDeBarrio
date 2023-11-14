@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.SuperKeyBoard;
 import org.example.domain.entities.BougthProduct;
 import org.example.domain.entities.Product;
 
@@ -20,7 +21,9 @@ public class SalesService {
     private ProductService productService;
 
     //Metodo constructor
-   public SalesService(ProductService productService) {}
+   public SalesService(ProductService productService) {
+       this.productService=productService;
+   }
 
     //Metodos Getter y setter
     public List<BougthProduct> getDataSales() {
@@ -37,11 +40,10 @@ public class SalesService {
         prices = prices;
     }
 
-    Scanner compra = new Scanner(System.in);
     public void SalesTotal(ProductService productService){
 
         System.out.println("Por favor ingrese el nombre del producto a comprar");
-        nombreCompra = compra.nextLine();
+        nombreCompra = SuperKeyBoard.readText();
 
         Optional<Product> productOptional = productService.findProductByName(nombreCompra);
         //System.out.println(productOptional);
@@ -51,8 +53,8 @@ public class SalesService {
             Product productInList= productOptional.stream().filter(x->x.getName().equals(nombreCompra)).findFirst().orElse(new Product());
 
             System.out.println("Por favor ingrese la cantidad de " + nombreCompra + " que compra el cliente");
-            cantiCompra = compra.nextInt();
-            compra.nextLine();
+            cantiCompra = SuperKeyBoard.readNumber();
+
             if (cantiCompra<=productInList.getQuantity()){
                 double IVA = 0.19;
                 double totalIva = productInList.getPrice() * IVA;

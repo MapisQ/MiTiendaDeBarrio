@@ -1,8 +1,8 @@
 package org.example.services;
 
+import org.example.SuperKeyBoard;
 import org.example.domain.crud.ProductCrud;
 import org.example.domain.crud.SalesCrud;
-import org.example.domain.entities.Product;
 import org.example.menus.InventoryMenu;
 import org.example.menus.PrincipalMenu;
 import org.example.menus.SalesMenu;
@@ -18,18 +18,16 @@ public class MenuService {
 
     ProductService productService = new ProductService();
     ProductCrud productCrud = new ProductCrud(productService,this);
-    SalesCrud sales = new SalesCrud(productService);
+    SalesCrud sales = new SalesCrud(productService,this);
 
 
 
     //Metodos para seleccionar alguna opción en los menus
     public PrincipalMenu selectOptionMenuP(){
-        
-        Scanner menuP = new Scanner(System.in);
 
         System.out.println("Por favor seleccione una opción: ");
         System.out.println(PrincipalMenu.PRINCIPAL_MENU);
-        int option = menuP.nextInt();
+        int option = SuperKeyBoard.readNumber();
         try {
             if (option < 1 || option > 3) {
                 System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
@@ -56,12 +54,10 @@ public class MenuService {
     }
 
     public PrincipalMenu selectOptionMenuI() {
-        Scanner menuI = new Scanner(System.in);
-
 
         System.out.println("Por favor seleccione una opción: ");
         System.out.println(InventoryMenu.INVENTORY_MENU);
-        int option = menuI.nextInt();
+        int option =SuperKeyBoard.readNumber();
 
     try {
         if (option < 1 || option > 8) {
@@ -111,11 +107,9 @@ public class MenuService {
 
     public SalesMenu selectOptionMenuS(){
 
-        Scanner menuS = new Scanner(System.in);
-
         System.out.println("Por favor seleccione una opción: ");
         System.out.println(SalesMenu.SALES_MENU);
-        int option = menuS.nextInt();
+        int option = SuperKeyBoard.readNumber();
 
         try {
         if (option < 1 || option > 5) {
@@ -149,27 +143,25 @@ public class MenuService {
     }
 
     public UpdateProductMenu selectOptionMenuUP() {
-        Scanner updateProduct = new Scanner(System.in);
 
-                System.out.println("Por favor seleccione una opción valida: ");
-                System.out.println(UpdateProductMenu.SELECT_UPDATE_PRODUCT);
-                int option = updateProduct.nextInt();
-                updateProduct.nextLine();
+        System.out.println("Por favor seleccione una opción valida: ");
+        System.out.println(UpdateProductMenu.SELECT_UPDATE_PRODUCT);
+        int option = SuperKeyBoard.readNumber();
 
-                try {
-                    if (option < 1 || option > 7) {
-                        System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
-                        selectOptionMenuUP();
+        try {
+            if (option < 1 || option > 7) {
+                System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
+                selectOptionMenuUP();
 
-                    } else if (option>=1 || option<=6) {
-                        productCrud.modifyProduct();
-                    } else if (option==7) {
-                        selectOptionMenuI();
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
-                    selectOptionMenuUP();
-                }
+            } else if (option>=1 || option<=6) {
+                productCrud.modifyProduct();
+            } else if (option==7) {
+                selectOptionMenuI();
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
+            selectOptionMenuUP();
+        }
         return selectOptionMenuUP();
     }
 }
