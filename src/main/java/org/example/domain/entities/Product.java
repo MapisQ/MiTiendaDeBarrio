@@ -1,33 +1,27 @@
 package org.example.domain.entities;
 
-import org.example.enums.ECategory;
-
-import java.util.Date;
-
 public class Product {
     //Atributos
     private int idProduct;
     private String name;
-    private Date date ;
-    private String brand;
     private int quantity;
     private String category;
     private String description;
     private int price;
+    private String label;
     private String url;
     private static int contadorId = 0;
     //Lista que va almacenar los productos
 
     //Metodos constructores
-    public Product(String name, Date date, String brand, String category, String description, int price,String url,int quantity) {
-        this.idProduct = ++contadorId;
+    public Product(int idProduct,String name, String description, String category, int quantity, int price, String label, String url) {
+        this.idProduct =idProduct;
         this.name = name;
-        this.date = date;
-        this.brand = brand;
         this.quantity= quantity;
         this.category = category;
         this.description = description;
         this.price = price;
+        this.label=label;
         this.url = url;
 
     }
@@ -46,20 +40,6 @@ public class Product {
     }
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     public int getQuantity() {
@@ -90,6 +70,14 @@ public class Product {
         this.price = price;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String etiqueta) {
+        this.label = etiqueta;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -97,14 +85,13 @@ public class Product {
         this.url = url;
     }
 
-
     //Metodo toString
-
     @Override
     public String toString() {
-        return "\nId: "+idProduct+"\nNombre: "+name+"\nFecha de vencimiento: "+date
-                +"\nMarca: "+brand+"\nCantidad: "+quantity+"\nCategoria: "+category+
-                "\nDescripción: "+description+"\nPrecio: "+price+"\nUrl Imagen: "+url;
+        return "\nId: "+idProduct+"\nNombre: "+name+"\nCantidad: "+quantity+"\nCategoria: "+category+
+        "\nDescripción: "+description+"\nPrecio: "+price+"\nEtiqueta: "+label+"\nUrl Imagen: "+url;
+
+        //return String.format("%-5s|%-60s |%-5s| %-20s | %-30s | %-20s | %-10s | %50s", getIdProduct(), getName(),getQuantity(), getCategory(), getDescription(), getPrice(),getEtiqueta(),getUrl());
     }
 }
 
