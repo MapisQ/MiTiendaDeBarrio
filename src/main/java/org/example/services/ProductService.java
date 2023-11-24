@@ -8,12 +8,8 @@ import org.example.enums.ECategory;
 import java.util.*;
 
 public class ProductService {
-
     private final List<Product> listProductsInventory = new ArrayList<>();
-    private ProductService productService;
-    public ProductService(ProductService productService) {
-        this.productService = productService;
-    }
+
     public ProductService() {}
 
     //Metodos getter y setter
@@ -25,9 +21,10 @@ public class ProductService {
     public void addProductAtList(Product product){
         if (!listProductsInventory.contains(product)){
             listProductsInventory.add(product);
+            //System.out.println(listProductsInventory);
             System.out.println("¡Producto agregado al inventario!");
         }else {
-            System.out.println("El producto ya se encuentra en el inventario :(");
+            System.out.println("El producto ya se encuentra en el inventario");
         }
     }
 
@@ -40,8 +37,6 @@ public class ProductService {
                 .filter(product -> product.getName().equalsIgnoreCase(name))
                 .findAny();
     }
-
-    public void printProduct() {listProductsInventory.stream().forEach(product -> System.out.println(product)); }
 
     public ECategory selectCategoryProduct(){
 
@@ -71,12 +66,7 @@ public class ProductService {
 
         return updateName;
     }
-    public String updateBrandProduct(){
-        System.out.println("Por favor ingrese la marca que desea actualizar");
-        String updateBrand = SuperKeyBoard.readText();
 
-        return updateBrand;
-    }
     public String updateDescriptionProduct(){
         SuperKeyBoard.readText();
         System.out.println("Por favor ingrese la descripción que desea actualizar");
@@ -91,13 +81,28 @@ public class ProductService {
 
         return updatePrice;
     }
+    public int updateQuantityProduct(Product product) {
+
+        System.out.println("Por favor ingrese la cantidad de productos que desea actualizar:");
+        int updateQuantity = SuperKeyBoard.readNumber();
+        int finalQuantity;
+        if (updateQuantity <= 0) {
+            System.out.println("por favor ingrese un valor valido para la cantidad en stock");
+            return updateQuantityProduct(product);
+        } else {
+            finalQuantity = updateQuantity + product.getQuantity();
+        }
+        return finalQuantity;
+    }
     public String updateURLProduct(){
         System.out.println("Por favor ingrese la URL que desea actualizar");
         String updateUrl = SuperKeyBoard.readText();
 
         return updateUrl;
     }
-
+    public void printAllInventory(){
+        System.out.println(listProductsInventory);
+    }
 
     //Metodo toString
     @Override

@@ -1,29 +1,34 @@
 package org.example.services;
 
 import org.example.SuperKeyBoard;
+import org.example.domain.crud.InventoryCrud;
 import org.example.domain.crud.ProductCrud;
 import org.example.domain.crud.SalesCrud;
+import org.example.domain.entities.Product;
 import org.example.menus.InventoryMenu;
 import org.example.menus.PrincipalMenu;
 import org.example.menus.SalesMenu;
 import org.example.menus.UpdateProductMenu;
-
 import java.util.InputMismatchException;
-import java.util.Scanner;
-
-import static java.awt.SystemColor.menu;
 
 public class MenuService {
     public MenuService() {}
 
+    Product product =new Product();
+
     ProductService productService = new ProductService();
-    ProductCrud productCrud = new ProductCrud(productService,this);
+    InventoryService inventoryService = new InventoryService(product,productService);
+
+    InventoryCrud inventoryCrud = new InventoryCrud(productService);
+    ProductCrud productCrud = new ProductCrud(productService,this,inventoryService);
     SalesCrud sales = new SalesCrud(productService,this);
 
 
 
     //Metodos para seleccionar alguna opción en los menus
     public PrincipalMenu selectOptionMenuP(){
+
+        inventoryService.readCSV();
 
         System.out.println("Por favor seleccione una opción: ");
         System.out.println(PrincipalMenu.PRINCIPAL_MENU);
@@ -34,7 +39,7 @@ public class MenuService {
                 selectOptionMenuP();
             } else if (option>=1 || option<=3) {
                 switch (option) {
-                    case 1:selectOptionMenuI();
+                    case 1: selectOptionMenuI();
                         //System.out.println("Menu inventario");
                         break;
                     case 2:selectOptionMenuS();
@@ -60,13 +65,12 @@ public class MenuService {
         int option =SuperKeyBoard.readNumber();
 
     try {
-        if (option < 1 || option > 8) {
+        if (option < 1 || option > 9) {
             System.out.println("| La opción que seleccionó no es valida. Por favor intente nuevamente |\n");
             selectOptionMenuI();
-        } else if (option >= 1 || option <= 8) {
+        } else if (option >= 1 || option <= 9) {
             switch (option) {
-                case 1:
-                    productCrud.addProduct();
+                case 1:productCrud.addProduct();
                     //System.out.println("Has registrado un producto");
                     break;
                 case 2:
@@ -82,7 +86,8 @@ public class MenuService {
                     //System.out.println("Ha modificado un producto");
                     break;
                 case 5:
-                    productCrud.printInventory();
+                    //productCrud.printAllInventory();
+                    productCrud.printAllInventory();
                     //System.out.println("La lista de invetario es: ");
                     break;
                 case 6:selectOptionMenuS();
@@ -95,7 +100,6 @@ public class MenuService {
                 case 8:
                     System.exit(0);
                     //System.out.println("Esta en el menú principal");
-                break;
             }
         }
     }catch (InputMismatchException e) {

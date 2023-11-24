@@ -1,29 +1,16 @@
 package org.example.domain.crud;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import org.example.domain.entities.Inventory;
 import org.example.domain.ProductServiceInterface;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
+import org.example.domain.entities.Product;
+import org.example.services.InventoryService;
+import org.example.services.ProductService;
 
 public class InventoryCrud implements ProductServiceInterface {
+    private ProductService productService;
 
-    //Lista que va a almacenar el inventario
-    List<Inventory> listinventory = new ArrayList<>();
-
-    //Metodo constructor
-    public InventoryCrud(List<Inventory> listinventory) {
-        this.listinventory = listinventory;
+    public InventoryCrud(ProductService productService) {
+        this.productService=productService;
     }
-
-    public InventoryCrud() {}
 
     //Metodos implementados de la interface.
     @Override
@@ -44,46 +31,5 @@ public class InventoryCrud implements ProductServiceInterface {
     @Override
     public void searchProduct() {
         //En caso de que se busquen los archivos directamente del archivo
-    }
-
-    public void printInventory() {
-        //Variable contador para asignar un id a cada producto del archivo
-        int contador = 0;
-
-        //La ruta del archivo inventory.csv
-        File file = new File("C:\\Users\\PC\\IdeaProjects\\Semillero Banco de Bogotá\\MiTiendaDeBarrio-ProyectoIntegrador\\src\\main\\java\\org\\example\\resources\\inventory.csv");
-        //Abre el archivo para leerlo
-        try(Reader reader= new FileReader(file);
-            //Esta linea recorre cada linea del archivo con el CSVParser por lo que no es necesario el Scanner
-            CSVParser parseo = new CSVParser(reader, CSVFormat.DEFAULT)) {
-            //La variable csvRecord almacena una linea del archivo cada vez que se itera el ciclo
-            for (CSVRecord csvRecord : parseo) {
-
-                //El contador empieza a sumar 1 cada vez que se itera el bucle
-                contador++;
-                //System.out.println(csvRecord);
-
-                //Se asigna una posición a cada variable
-                String nombre = csvRecord.get(0);
-                String descripción = csvRecord.get(1);
-                String categoria = csvRecord.get(2);
-                String etiqueta  = csvRecord.get(3);
-                String precio = csvRecord.get(4);
-                String  URL = csvRecord.get(5);
-
-                //Se imprime cada una de las variables que fueron asignadas anteriormente
-                System.out.println("<------------------------------------->");
-                System.out.println("Id Producto: "+contador);
-                System.out.println("Nombre Producto: "+nombre);
-                System.out.println("Descripción: "+descripción);
-                System.out.println("Categoria: "+categoria);
-                System.out.println("Etiqueta: "+etiqueta);
-                System.out.println("Precio: "+precio);
-                System.out.println("URL de la imagen: "+URL);
-                System.out.println("<------------------------------------->");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
