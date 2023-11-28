@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -12,8 +12,39 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="729c689e-2fee-4c79-a5ff-6f5ec6e3524d">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+    <connection id="8fbfcdf7-850a-47f3-927c-a5717218326b">
+      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[-- create user admin_store with password '123456789';
+
+-- alter user admin_store with CREATEDB;
+
+-- alter user admin_store with password 'abc123!';
+
+-- select * from pg_user;
+
+-- create database project_store;
+
+-- alter database project_store owner to admin_store;
+
+-- commit;
+
+CREATE TABLE product (
+    id_product INT PRIMARY KEY,
+    name_product VARCHAR(100),
+    unit_price DECIMAL(10, 2),
+    stock_quantity INT,
+    category VARCHAR(50)
+);
+
+CREATE TABLE sale (
+    id_sale INT PRIMARY KEY,
+    id_product INT,
+    quantity INT,
+    sale_date DATE,
+    total_sale DECIMAL(10, 2),
+    FOREIGN KEY (id_product) REFERENCES product(id_product)
+);
+
+SELECT * FROM product;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -22,13 +53,30 @@
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
+  <component name="DBNavigator.Project.DatabaseSessionManager">
+    <connection id="d7af36ad-f3ec-403f-92da-5fc12407946f" />
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
+  </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
   </component>
+  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
+    <recently-used-interfaces />
+  </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="729c689e-2fee-4c79-a5ff-6f5ec6e3524d" active="true" signed="true">
+      <connection id="8fbfcdf7-850a-47f3-927c-a5717218326b" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -41,15 +89,15 @@
           <url-type value="DATABASE" />
           <host value="localhost" />
           <port value="5432" />
-          <database value="postgres" />
+          <database value="project_store" />
           <tns-folder value="" />
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
-          <user value="postgres" />
-          <deprecated-pwd value="MTIzNA==" />
+          <user value="admin_store" />
+          <deprecated-pwd value="YWJjMTIzIQ==" />
         </database>
         <properties>
-          <auto-commit value="false" />
+          <auto-commit value="true" />
         </properties>
         <ssh-settings>
           <active value="false" />
@@ -519,5 +567,9 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
+    <execution-variable-types />
   </component>
 </project>
